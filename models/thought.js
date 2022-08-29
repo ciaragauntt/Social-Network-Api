@@ -1,5 +1,5 @@
 //require schema and model from mongoose
-const mongoose = require('mongoose');
+const {Schema, model, Types} = require('mongoose');
 
 //construct a new instance of the schema class
 const thoughtsSchema = new mongoose.Schema({
