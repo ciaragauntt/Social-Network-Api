@@ -3,13 +3,26 @@ const {User, Thought} = require('../models');
 module.exports = {
     // Get all Users
     getAllUsers(req, res) {
-        User.find()
+        User.find({})
+            // .populate({
+            //     path: 'thoughts',
+            //     select: '-__v'
+            // })
+            // .populate({
+            //     path: 'friends',
+            //     select: '-__v'
+            // })
+            .select('-__v')
             .then((user) => res.json(user))
             .catch((err) => res.status(500).json(err));
     },
     // Get a User
     getUserById(req, res) {
         User.findOne({_id: req.params.userId})
+            .populate({
+                path: 'thoughts',
+                select:'-__v'
+            })
             .select('-__v')
             .then((user) => 
                 !user
@@ -54,9 +67,9 @@ module.exports = {
     },
     // Add a Friend
     addFriend(req, res) {
-        User.finOneAndUpdate (
+        User.findOneAndUpdate (
             {_id: req.params.userId},
-            {$addToSet: {friends: req.params.friendId}},
+            {$push: {friends: req.params.friendId}},
             { runValidators: true, new: true}
         )
         .then((user) => 
@@ -68,7 +81,7 @@ module.exports = {
     },
     // Delete a Friend
     removeFriend(req, res) {
-        User.findOneAndDelete(
+        User.findOneAndUpdate(
             {_id: req.params.userId},
             {$pull: {friends: req.params.friendId}},
             {new: true}

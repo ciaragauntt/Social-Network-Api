@@ -4,12 +4,21 @@ module.exports = {
     //get all thoughts
     getAllThought(req, res) {
         Thought.find({})
+            .populate({
+                path: 'reactions',
+                select: '-__v'
+            })
+            .select('-__v')
           .then((thought) => res.json(thought))
           .catch((err) => res.status(500).json(err));
     },
     //get on thought by id
     getThoughtById(req, res) {
-        Thought.findOne({_id: req.params.courseId})
+        Thought.findOne({_id: req.params.thoughtsId})
+        .populate({
+            path: 'reactions',
+            select: '-__v'
+        })
         .select('-__v')
         .then((thought) => 
             !thought
@@ -22,10 +31,10 @@ module.exports = {
     //push the created thoughts id to th associate users thoughts array field
     createThought(req, res) {
         Thought.create(req.body)
-            .then(({_id}) => {
+            .then(({username, _id}) => {
                 return User.findOneAndUpdate(
-                    {_id: req.body.userId},
-                    {$push: {thoughts: _id }},
+                    {username: username},
+                    {$push: {thought: _id }},
                     {new: true}
                 );
             })
@@ -45,8 +54,8 @@ module.exports = {
         .then((user) =>
             !user
                 ? res.status(404).json({message: 'NO THOUGHT WITH THAT ID'})
-                : res.json(user)
-                )
+                : res.json(user))
+            
                 .catch((err) => res.staus(500).json(err));
     },
     //delete thought
