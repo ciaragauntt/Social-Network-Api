@@ -1,5 +1,6 @@
 //require schema and model from mongoose
 const {Schema, model, Types} = require('mongoose');
+const moment = require('moment');
 
 const reactionSchema = new Schema({
     //configure individual properties using schema types
@@ -10,7 +11,7 @@ const reactionSchema = new Schema({
     reactionBody: {
         type: String,
         required: true,
-        maxLength: 280,
+        maxLength: 280
     },
     username: {
         type: String,
@@ -26,7 +27,6 @@ const reactionSchema = new Schema({
         toJSON: {
             getters: true,
         },
-        id: false,
     }
 );
 //construct a new instance of the schema class
@@ -36,7 +36,7 @@ const thoughtsSchema = new Schema({
         type: String,
         required: true,
         minLength: 1,
-        maxLength: 280,
+        maxLength: 280
     },
 
     createdAt: {
@@ -54,16 +54,15 @@ const thoughtsSchema = new Schema({
     },
     {
         toJSON: {
-            virtuals: true,
             getters: true
         },
-        id: false,
+        
     }
 );
-thoughtsSchema.virtual("reactionCount").get(function () {
-    return this.reactions.length;
-  });
+// thoughtsSchema.virtual("reactionCount").get(function () {
+//     return this.reactions.length;
+//   });
 
-  const Thought = model("Thought", thoughtsSchema);
+  const Thoughts = model("Thoughts", thoughtsSchema);
   
-  module.exports = Thought;
+  module.exports = Thoughts;
