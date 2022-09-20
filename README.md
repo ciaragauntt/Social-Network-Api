@@ -8,9 +8,11 @@ I WANT an API for my social network that uses a NoSQL database
 SO THAT my website can handle large amounts of unstructured data
 
 # Walkthrough Videos
-https://drive.google.com/file/d/1hryUFIcBNIn5MzFGIQCe-w_L6yMhrgXR/view
-https://drive.google.com/file/d/1S7bU9ydoG67WHBmLussXmFc8XNuXz82I/view
-https://drive.google.com/file/d/1vwJwa58HsFiaksdxXh_SYSrbm1P5kMtK/view
+
+
+https://user-images.githubusercontent.com/103298079/191376064-04a37c64-5541-4c54-b4a1-48c767b9a023.mp4
+
+
 
 # Installation
 * Clone github repository
